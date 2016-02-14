@@ -49,19 +49,5 @@ after_initialize do
     end
   end
 
-  LetterAvatar::Identity.class_eval do
-    def self.from_username(username)
-      identity = new
-      identity.color = LetterAvatar::COLORS[
-        Digest::MD5.hexdigest(username)[0...15].to_i(16) % LetterAvatar::COLORS.length
-      ]
-      if username[0] =~ /[^\w]/
-        identity.letter = (Pinyin.t(Romaji.kana2romaji(username)).strip.to_s[0] || '_').upcase
-      else
-        identity.letter = username[0].upcase
-      end
-      identity
-    end
-  end
 end
 
